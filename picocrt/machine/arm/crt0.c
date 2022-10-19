@@ -65,8 +65,9 @@ _start(void)
 	__asm__("dsb");
 	__asm__("isb");
 
-	/* Clear FPU status register */
-	__asm__("vmsr fpscr, %0" : : "r" (0));
+        /* Clear FPU status register. 0x40000 will initialize FPSCR.LTPSIZE to
+         * a valid value for 8.1-m low overhead loops. */
+	__asm__("vmsr fpscr, %0" : : "r" (0x40000));
 #endif
 	__start();
 }
